@@ -1,0 +1,61 @@
+import math
+def next_cell(p_pos, r, c, n):
+    
+    #find possible directions 
+    possible_cells = []
+    if r-1 > -1:
+        possible_cells.append((r-1 , c))  
+    if r+1 < n:
+        possible_cells.append((r+1 , c))
+    if c+1 < n: 
+        possible_cells.append((r, c+1))
+    if c-1 >-1:
+        possible_cells.append((r, c-1))
+        
+
+    distances  = []
+    for i in range(len(possible_cells)):
+        #Euclidean distance
+        result = math.sqrt(((possible_cells[i][0] - p_pos[0]) ** 2) + ((possible_cells[i][1] - p_pos[1]) ** 2))
+        distances.append(result)
+        
+
+    return [y for (x , y) in sorted(zip(distances, possible_cells))]
+
+
+def nextMove(n,r,c,grid):
+    
+    #find princess position 
+    for i in range(len(grid)):
+        for j in range(len(grid[i])):
+            if grid[i][j] == 'p':
+                p_position = (i, j)
+                
+    #find the closest direction to the princess 
+    
+    next_step = next_cell(p_position, r, c, n)
+    
+    
+    if c > p_position [1]:
+        return 'LEFT'
+    
+    elif c  < p_position [1]:
+        return 'RIGHT'
+    
+    elif r > p_position [0]:
+        return 'UP'
+
+    elif r < p_position [0]:
+        return 'DOWN'
+
+   
+
+if __name__ == "__main__":
+
+    n = int(input())
+    r,c = [int(i) for i in input().strip().split()]
+    grid = []
+    for i in range(0, n):
+        grid.append(input())
+        
+    print(nextMove(n,r,c,grid))
